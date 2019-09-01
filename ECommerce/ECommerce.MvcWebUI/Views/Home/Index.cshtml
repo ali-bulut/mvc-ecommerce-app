@@ -1,0 +1,42 @@
+﻿@model IEnumerable<ECommerce.MvcWebUI.Entity.Product>
+@{
+    ViewBag.Title = "Index";
+}
+
+
+
+@section jumbotron{
+
+    <div class="jumbotron">
+        <div class="container">
+            <h1 class="display-4">Hello, world!</h1>
+            <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+            <hr class="my-4">
+            <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+            <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+        </div>
+    </div>
+
+}
+
+<div class="row">
+    @foreach (var product in Model)
+    {
+        <div class="col-md-4 mt-3">
+            <div class="card">
+                <img src="holder.js/100px160/" class="card-img-top" alt="@product.Name">
+                <div class="card-body">
+                    <h4 class="card-title"><a href="/Home/Details/@product.Id">@product.Name</a></h4>
+                    <p class="card-text">@product.Description</p>
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted">
+                        $@product.Price
+                    </small>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+
