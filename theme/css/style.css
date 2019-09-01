@@ -4,6 +4,19 @@
     height: 100%;
 }
 
+
+#write-review{
+ position: absolute;
+    left: 130px;
+    
+}
+
+#product-price{
+    font-size: 28px;
+    color: red;
+}
+
+
 /* Custom page CSS
 -------------------------------------------------- */
 /* Not required for template or sticky footer method. */
@@ -24,3 +37,5 @@ main > .container {
 code {
   font-size: 80%;
 }
+
+
