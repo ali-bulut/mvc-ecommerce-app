@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ECommerce.MvcWebUI.Entity.Product>
+﻿@model IEnumerable<ECommerce.MvcWebUI.Models.ProductModel>
 @{
     ViewBag.Title = "List";
 }
@@ -6,40 +6,27 @@
 <div class="row mt-5">
 
     <div class="col-md-3">
-
-        <div class="list-group">
-            <a href="#" class="list-group-item list-group-item-action active">
-                Cras justo odio
-            </a>
-            <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
-            <a href="#" class="list-group-item list-group-item-action">Morbi leo risus</a>
-            <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
-            <a href="#" class="list-group-item list-group-item-action disabled" tabindex="-1" aria-disabled="true">Vestibulum at eros</a>
-        </div>
-
-
+        @Html.Action("GetCategories","Home")
     </div>
 
 
     <div class="col-md-9">
-        <div class="row">
-            @foreach (var product in Model)
-            {
-                <div class="col-md-4 mt-3">
-                    <div class="card">
-                        <img src="holder.js/100px160/" class="card-img-top" alt="@product.Name">
-                        <div class="card-body">
-                            <h4 class="card-title"><a href="/Home/Details/@product.Id">@product.Name</a></h4>
-                            <p class="card-text">@product.Description</p>
-                        </div>
-                        <div class="card-footer">
-                            <small class="text-muted">
-                                $@product.Price
-                            </small>
-                        </div>
-                    </div>
-                </div>
-            }
-        </div>
+
+        @if (Model.Count() == 0)
+        {
+            <div class="alert alert-warning" role="alert">
+                <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                No products found in this category.
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-warning" role="alert">
+                <i class="fa fa-check-square" aria-hidden="true"></i>
+                <strong>@Model.Count() products</strong> found in this category.
+            </div>
+        }
+
+        @Html.Partial("_ProductList", Model)
     </div>
 </div>

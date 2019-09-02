@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ECommerce.MvcWebUI.Entity.Product>
+﻿@model IEnumerable<ECommerce.MvcWebUI.Models.ProductModel>
 @{
     ViewBag.Title = "Index";
 }
@@ -19,24 +19,6 @@
 
 }
 
-<div class="row">
-    @foreach (var product in Model)
-    {
-        <div class="col-md-4 mt-3">
-            <div class="card">
-                <img src="holder.js/100px160/" class="card-img-top" alt="@product.Name">
-                <div class="card-body">
-                    <h4 class="card-title"><a href="/Home/Details/@product.Id">@product.Name</a></h4>
-                    <p class="card-text">@product.Description</p>
-                </div>
-                <div class="card-footer">
-                    <small class="text-muted">
-                        $@product.Price
-                    </small>
-                </div>
-            </div>
-        </div>
-    }
-</div>
 
+@Html.Partial("_ProductList",Model)
 

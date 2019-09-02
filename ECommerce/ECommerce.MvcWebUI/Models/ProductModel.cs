@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace ECommerce.MvcWebUI.Entity
+namespace ECommerce.MvcWebUI.Models
 {
-    public class Product
+    public class ProductModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -17,6 +17,5 @@ namespace ECommerce.MvcWebUI.Entity
         public bool IsHome { get; set; }
 
         public int CategoryId { get; set; }
-        public Category Category { get; set; }
     }
 }
