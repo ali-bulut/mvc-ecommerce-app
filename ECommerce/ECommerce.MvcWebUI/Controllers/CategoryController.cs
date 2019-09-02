@@ -20,21 +20,6 @@ namespace ECommerce.MvcWebUI.Controllers
             return View(db.Categories.ToList());
         }
 
-        // GET: Category/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Category category = db.Categories.Find(id);
-            if (category == null)
-            {
-                return HttpNotFound();
-            }
-            return View(category);
-        }
-
         // GET: Category/Create
         public ActionResult Create()
         {

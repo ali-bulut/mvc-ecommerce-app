@@ -24,7 +24,8 @@ namespace ECommerce.MvcWebUI.Controllers
                 IsApproved = i.IsApproved,
                 IsHome = i.IsHome,
                 Image = i.Image == null ? "NoImage.jpg" : i.Image,
-                CategoryId = i.CategoryId
+                CategoryId = i.CategoryId,
+                Category=i.Category
             })
             .Where(i => i.IsHome == true && i.IsApproved == true)
             .ToList();
@@ -33,7 +34,23 @@ namespace ECommerce.MvcWebUI.Controllers
 
         public ActionResult Details(int id)
         {
-            return View(context.Products.Where(i => i.Id == id).FirstOrDefault());
+            var product = context.Products.Select(i => new ProductModel()
+            {
+                Id = i.Id,
+                Name = i.Name.Length > 50 ? i.Name.Substring(0, 47) + "..." : i.Name,
+                Description = i.Description.Length > 50 ? i.Description.Substring(0, 47) + "..." : i.Description,
+                Price = i.Price,
+                Stock = i.Stock,
+                IsApproved = i.IsApproved,
+                IsHome = i.IsHome,
+                Image = i.Image == null ? "NoImage.jpg" : i.Image,
+                CategoryId = i.CategoryId,
+                Category = i.Category
+            })
+            .Where(i => i.Id == id)
+            .FirstOrDefault();
+
+            return View(product);
         }
 
         //?(nullable) bu işaret ile illa id göndermemize gerek yok yani home/list dediğimizde de çalışır
@@ -50,7 +67,8 @@ namespace ECommerce.MvcWebUI.Controllers
                 IsApproved = i.IsApproved,
                 IsHome = i.IsHome,
                 Image = i.Image == null ? "NoImage.jpg" : i.Image,
-                CategoryId = i.CategoryId
+                CategoryId = i.CategoryId,
+                Category = i.Category
             })
             .Where(i => i.IsApproved == true)
             .AsQueryable();

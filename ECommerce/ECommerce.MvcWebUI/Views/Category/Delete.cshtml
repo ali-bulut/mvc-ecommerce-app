@@ -2,6 +2,8 @@
 
 @{
     ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
 }
 
 <div class="mt-5">
@@ -33,7 +35,7 @@
             @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-danger" /> |
+            <input type="submit" value="Delete" class="btn btn-danger" /> 
             @Html.ActionLink("Back to Category List", "Index", null, new { @class = "btn btn-warning" })
         </div>
         }
