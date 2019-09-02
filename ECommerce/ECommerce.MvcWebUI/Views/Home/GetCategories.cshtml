@@ -1,0 +1,44 @@
+﻿@model IEnumerable<ECommerce.MvcWebUI.Entity.Category>
+@{ 
+    //routevalue mantığı bu
+    var selectedCategory = Url.RequestContext.RouteData.Values["id"];
+}
+
+
+<div class="list-group">
+        <a href="/Home/List" class="list-group-item">
+            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+            All Products
+        </a>
+    @foreach (var category in Model)
+    {
+        if (selectedCategory != null)
+        {
+            //objectden direk inte çevirmek mümkün değil önce stringe sonra inte çevrilir
+            if (category.Id == int.Parse(selectedCategory.ToString()))
+            {
+                //seçilen kategori ile route idsi birbirine eşit
+                
+                    <a href="/Home/List/@category.Id" class="list-group-item active">
+                        <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                        @category.Name
+                    </a>
+            }
+            else
+            {
+                    <a href="/Home/List/@category.Id" class="list-group-item">
+                        <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                        @category.Name
+                    </a>
+            }
+        }
+        else
+        {
+                <a href="/Home/List/@category.Id" class="list-group-item">
+                    <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                    @category.Name
+                </a>
+        }
+        
+    }
+</div>
