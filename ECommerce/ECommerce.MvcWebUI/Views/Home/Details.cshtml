@@ -1,4 +1,4 @@
-﻿@model ECommerce.MvcWebUI.Entity.Product
+﻿@model ECommerce.MvcWebUI.Models.ProductModel
 
 @{
     ViewBag.Title = "Details";
@@ -6,7 +6,7 @@
 
 <div id="product-details" class="row mt-5">
     <div class="col-md-6">
-        <img src="/Upload/@Model.Image" class="img-fluid rounded" style="max-width:100%; height:auto;" alt="">
+        <img src="/Upload/@Model.Image" class="img-fluid rounded" style="width:250px; height:auto; margin-left:90px; " alt="">
     </div>
     <div class="col-md-6">
         <div class="row">

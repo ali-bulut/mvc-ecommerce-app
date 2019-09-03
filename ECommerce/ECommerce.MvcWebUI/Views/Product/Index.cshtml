@@ -1,0 +1,111 @@
+﻿@model IEnumerable<ECommerce.MvcWebUI.Models.ProductModel>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+}
+
+
+<div class="mt-5">
+    <h2>Product List</h2>
+    <hr />
+    <p>
+        @Html.ActionLink("New Product", "Create", null, new { @class = "btn btn-primary" })
+    </p>
+
+
+    @if (TempData["name"] != null && TempData["category"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <p>@TempData["name"] product deleted in @TempData["category"] category!</p>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
+
+
+    <table class="table table-bordered table-striped">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Category.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Image)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.IsApproved)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsHome)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.Name)
+                </td>
+                <td>
+                    <img src="/Upload/@item.Image" width="70" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                    <i class="fa fa-try" aria-hidden="true"></i>
+                </td>
+
+                <td>
+                    @if (item.IsApproved)
+                    {
+                        <label class="badge badge-success">
+                            <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                            Yes
+                        </label>
+                    }
+                    else
+                    {
+                        <label class="badge badge-danger">
+                            <i class="fa fa-times-circle-o" aria-hidden="true"></i>
+                            No
+                        </label>
+                    }
+                </td>
+                <td>
+                    @if (item.IsHome)
+                    {
+                        <label class="badge badge-success">
+                            <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                            Yes
+                        </label>
+                    }
+                    else
+                    {
+                        <label class="badge badge-danger">
+                            <i class="fa fa-times-circle-o" aria-hidden="true"></i>
+                            No
+                        </label>
+                    }
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-primary btn-sm" })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger btn-sm" })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
