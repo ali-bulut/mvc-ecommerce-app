@@ -10,6 +10,7 @@ using ECommerce.MvcWebUI.Entity;
 
 namespace ECommerce.MvcWebUI.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class CategoryController : Controller
     {
         private DataContext db = new DataContext();

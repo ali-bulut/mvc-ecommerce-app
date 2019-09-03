@@ -10,7 +10,7 @@ namespace ECommerce.MvcWebUI.Entity
     {
         public DataContext() : base("ecommerceConnection")
         {
-            Database.SetInitializer(new DataInitializer());
+            
         }
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
