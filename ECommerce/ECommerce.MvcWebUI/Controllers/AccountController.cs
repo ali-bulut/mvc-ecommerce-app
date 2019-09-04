@@ -1,4 +1,5 @@
-﻿using ECommerce.MvcWebUI.Identity;
+﻿using ECommerce.MvcWebUI.Entity;
+using ECommerce.MvcWebUI.Identity;
 using ECommerce.MvcWebUI.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -13,6 +14,7 @@ namespace ECommerce.MvcWebUI.Controllers
 {
     public class AccountController : Controller
     {
+        private DataContext db = new DataContext();
         private UserManager<ApplicationUser> UserManager;
         private RoleManager<ApplicationRole> RoleManager;
 
@@ -24,6 +26,79 @@ namespace ECommerce.MvcWebUI.Controllers
             var roleStore = new RoleStore<ApplicationRole>(new IdentityDataContext());
             RoleManager = new RoleManager<ApplicationRole>(roleStore);
         }
+
+        [Authorize]
+        public ActionResult Index()
+        {
+            var orders = db.Orders.Where(i => i.Username == User.Identity.Name).Select(i => new UserOrderModel()
+            {
+
+                Id=i.Id,
+                OrderNumber=i.OrderNumber,
+                OrdeDate=i.OrderDate,
+                OrderState=i.OrderState,
+                Total=i.Total
+            }).OrderByDescending(i=>i.OrdeDate).ToList();
+            return View(orders);
+        }
+
+        [Authorize]
+        public ActionResult Details(int id)
+        {
+
+            var entity = db.Orders.Where(i => i.Id == id).FirstOrDefault();
+            //.Select(i => new OrderDetailsModel()
+            //{
+            //    OrderId = i.Id,
+            //    OrderNumber = i.OrderNumber,
+            //    Total = i.Total,
+            //    OrderDate = i.OrderDate,
+            //    OrderState = i.OrderState,
+            //    AddressTitle = i.AddressTitle,
+            //    Address = i.Address,
+            //    City = i.City,
+            //    Town = i.Town,
+            //    District = i.District,
+            //    PostCode = i.PostCode,
+            //OrderLines = i.OrderLines.Select(x=> new OrderLineModel() {
+
+            //    ProductId = x.ProductId,
+            //    ProductName = x.Product.Name,
+            //    Image = x.Product.Image,
+            //    Quantity = x.Quantity,
+            //    Price = x.Price
+
+            //}).ToList()
+            //}).FirstOrDefault();
+
+            var model = new OrderDetailsModel()
+            {
+                OrderId = entity.Id,
+                OrderNumber = entity.OrderNumber,
+                Total = entity.Total,
+                OrderDate = entity.OrderDate,
+                OrderState = entity.OrderState,
+                AddressTitle = entity.AddressTitle,
+                Address = entity.Address,
+                City = entity.City,
+                Town = entity.Town,
+                District = entity.District,
+                PostCode = entity.PostCode,
+                OrderLines = entity.OrderLines.Select(x => new OrderLineModel()
+                {
+
+                    ProductId = x.ProductId,
+                    ProductName = x.Product.Name.Length>50?x.Product.Name.Substring(0,47)+"...": x.Product.Name,
+                    Image = x.Product.Image == null ? "NoImage.jpg" : x.Product.Image,
+                    Quantity = x.Quantity,
+                    Price = x.Price
+                }).ToList()
+            };
+            
+
+            return View(model);
+        }
+
         // GET: Account
         public ActionResult Register()
         {
@@ -87,6 +162,8 @@ namespace ECommerce.MvcWebUI.Controllers
                     authProperties.IsPersistent = model.RememberMe;
 
                     authManager.SignIn(authProperties, identityClaims);
+
+                   // TempData["role"] = user.Roles.Where(i => i.RoleId == "41d33f13-e4f6-490a-bf89-97f68c594fbb").FirstOrDefault();
 
                     if (!String.IsNullOrEmpty(ReturnUrl))
                     {
